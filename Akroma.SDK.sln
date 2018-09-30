@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Akroma.Core", "src\Akroma.Core\Akroma.Core.csproj", "{56B2F0C2-0D1B-454B-A3C2-2D4D23E5773F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akroma.Core.Tests", "tests\Akroma.Core.Tests\Akroma.Core.Tests.csproj", "{601D81DE-53D1-4B1A-8CBC-A43C2B2118B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akroma.Core.Integration.Tests", "tests\Akroma.Core.Integration.Tests\Akroma.Core.Integration.Tests.csproj", "{601D81DE-53D1-4B1A-8CBC-A43C2B2118B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

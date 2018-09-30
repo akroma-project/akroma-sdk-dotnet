@@ -56,9 +56,17 @@ namespace Akroma.Core.Model
         public HexBigInteger Timestamp { get; set; }
 
         [JsonProperty(PropertyName = "transactions")]
-        public virtual ICollection<string> Transaction { get; set; } = new List<string>();
+        public virtual ICollection<string> Transactions { get; set; } = new List<string>();
 
         [JsonProperty(PropertyName = "uncles")]
         public ICollection<string> Uncles { get; set; } = new List<string>();
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+        }
     }
 }

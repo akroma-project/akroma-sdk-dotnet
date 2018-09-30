@@ -38,7 +38,7 @@ namespace Akroma.Core
 
             var contentJson = JsonConvert.SerializeObject(content);
             Trace.WriteLine(contentJson);
-            var response = await HttpClient.PostAsync(Web3.Url, new StringContent(contentJson, Encoding.UTF8, "application/json"));
+            var response = await HttpClient.PostAsync(Akroma.Url, new StringContent(contentJson, Encoding.UTF8, "application/json"));
             var responseString = await response.Content.ReadAsStringAsync();
             var responseObject = JsonConvert.DeserializeObject<GethResponse<T>>(responseString);
             return responseObject;

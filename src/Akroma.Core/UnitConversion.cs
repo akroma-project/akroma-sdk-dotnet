@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Numerics;
 using Akroma.Core.Model;
 
@@ -34,19 +35,42 @@ namespace Akroma.Core
             Tether
         }
 
-        private static UnitConversion convert;
+        private static UnitConversion _convert;
 
-        public static UnitConversion Convert
+        public static UnitConversion Convert => _convert ?? (_convert = new UnitConversion());
+
+        private BigInteger CalculateNumberOfDecimalPlaces(double value, int maxNumberOfDecimals,
+            int currentNumberOfDecimals = 0)
         {
-            get
+            return CalculateNumberOfDecimalPlaces(System.Convert.ToDecimal(value), maxNumberOfDecimals,
+                currentNumberOfDecimals);
+        }
+
+        private BigInteger CalculateNumberOfDecimalPlaces(float value, int maxNumberOfDecimals, int currentNumberOfDecimals = 0)
+        {
+            return CalculateNumberOfDecimalPlaces(System.Convert.ToDecimal(value), maxNumberOfDecimals,
+                currentNumberOfDecimals);
+        }
+
+        private int CalculateNumberOfDecimalPlaces(decimal value, int maxNumberOfDecimals,
+            int currentNumberOfDecimals = 0)
+        {
+            if (currentNumberOfDecimals == 0)
             {
-                if (convert == null) convert = new UnitConversion();
-                return convert;
+                if (value.ToString(CultureInfo.InvariantCulture) == Math.Round(value).ToString(CultureInfo.InvariantCulture)) return 0;
+                currentNumberOfDecimals = 1;
             }
+
+            if (currentNumberOfDecimals == maxNumberOfDecimals) return maxNumberOfDecimals;
+            var multiplied = value * (decimal) BigInteger.Pow(10, currentNumberOfDecimals);
+            if (Math.Round(multiplied) == multiplied)
+                return currentNumberOfDecimals;
+            return CalculateNumberOfDecimalPlaces(value, maxNumberOfDecimals, currentNumberOfDecimals + 1);
         }
 
         /// <summary>
-        /// Converts from wei to a unit, NOTE: When the total number of digits is bigger than 29 they will be rounded the less significant digits
+        ///     Converts from wei to a unit, NOTE: When the total number of digits is bigger than 29 they will be rounded the less
+        ///     significant digits
         /// </summary>
         public decimal FromWei(BigInteger value, BigInteger toUnit)
         {
@@ -54,7 +78,8 @@ namespace Akroma.Core
         }
 
         /// <summary>
-        /// Converts from wei to a unit, NOTE: When the total number of digits is bigger than 29 they will be rounded the less significant digits
+        ///     Converts from wei to a unit, NOTE: When the total number of digits is bigger than 29 they will be rounded the less
+        ///     significant digits
         /// </summary>
         public decimal FromWei(BigInteger value, EthUnit toUnit = EthUnit.Ether)
         {
@@ -62,11 +87,12 @@ namespace Akroma.Core
         }
 
         /// <summary>
-        /// Converts from wei to a unit, NOTE: When the total number of digits is bigger than 29 they will be rounded the less significant digits
+        ///     Converts from wei to a unit, NOTE: When the total number of digits is bigger than 29 they will be rounded the less
+        ///     significant digits
         /// </summary>
         public decimal FromWei(BigInteger value, int decimalPlacesToUnit)
         {
-            return (decimal)new BigDecimal(value, decimalPlacesToUnit * -1);
+            return (decimal) new BigDecimal(value, decimalPlacesToUnit * -1);
         }
 
         public BigDecimal FromWeiToBigDecimal(BigInteger value, int decimalPlacesToUnit)
@@ -82,11 +108,6 @@ namespace Akroma.Core
         public BigDecimal FromWeiToBigDecimal(BigInteger value, BigInteger toUnit)
         {
             return FromWeiToBigDecimal(value, GetEthUnitValueLength(toUnit));
-        }
-
-        private int GetEthUnitValueLength(BigInteger unitValue)
-        {
-            return unitValue.ToString().Length - 1;
         }
 
         public BigInteger GetEthUnitValue(EthUnit ethUnit)
@@ -139,29 +160,14 @@ namespace Akroma.Core
                     return BigInteger.Parse("1000000000000000000000000000");
                 case EthUnit.Tether:
                     return BigInteger.Parse("1000000000000000000000000000000");
-
             }
+
             throw new NotImplementedException();
         }
 
-
-        public bool TryValidateUnitValue(BigInteger ethUnit)
+        private int GetEthUnitValueLength(BigInteger unitValue)
         {
-            if (ethUnit.ToString().Trim('0') == "1") return true;
-            throw new Exception("Invalid unit value, it should be a power of 10 ");
-        }
-
-        public BigInteger ToWeiFromUnit(decimal amount, BigInteger fromUnit)
-        {
-            return ToWeiFromUnit((BigDecimal)amount, fromUnit);
-        }
-
-        public BigInteger ToWeiFromUnit(BigDecimal amount, BigInteger fromUnit)
-        {
-            TryValidateUnitValue(fromUnit);
-            var bigDecimalFromUnit = new BigDecimal(fromUnit, 0);
-            var conversion = amount * bigDecimalFromUnit;
-            return conversion.Floor().Mantissa;
+            return unitValue.ToString().Length - 1;
         }
 
         public BigInteger ToWei(BigDecimal amount, EthUnit fromUnit = EthUnit.Ether)
@@ -186,7 +192,6 @@ namespace Akroma.Core
         {
             return ToWeiFromUnit(amount, GetEthUnitValue(fromUnit));
         }
-
 
 
         public BigInteger ToWei(BigInteger value, EthUnit fromUnit = EthUnit.Ether)
@@ -219,28 +224,24 @@ namespace Akroma.Core
             return ToWei(decimal.Parse(value), fromUnit);
         }
 
-        private BigInteger CalculateNumberOfDecimalPlaces(double value, int maxNumberOfDecimals, int currentNumberOfDecimals = 0)
+        public BigInteger ToWeiFromUnit(decimal amount, BigInteger fromUnit)
         {
-            return CalculateNumberOfDecimalPlaces(System.Convert.ToDecimal(value), maxNumberOfDecimals, currentNumberOfDecimals);
+            return ToWeiFromUnit((BigDecimal) amount, fromUnit);
         }
 
-        private BigInteger CalculateNumberOfDecimalPlaces(float value, int maxNumberOfDecimals, int currentNumberOfDecimals = 0)
+        public BigInteger ToWeiFromUnit(BigDecimal amount, BigInteger fromUnit)
         {
-            return CalculateNumberOfDecimalPlaces(System.Convert.ToDecimal(value), maxNumberOfDecimals, currentNumberOfDecimals);
+            TryValidateUnitValue(fromUnit);
+            var bigDecimalFromUnit = new BigDecimal(fromUnit, 0);
+            var conversion = amount * bigDecimalFromUnit;
+            return conversion.Floor().Mantissa;
         }
 
-        private int CalculateNumberOfDecimalPlaces(decimal value, int maxNumberOfDecimals, int currentNumberOfDecimals = 0)
+
+        public bool TryValidateUnitValue(BigInteger ethUnit)
         {
-            if (currentNumberOfDecimals == 0)
-            {
-                if (value.ToString() == Math.Round(value).ToString()) return 0;
-                currentNumberOfDecimals = 1;
-            }
-            if (currentNumberOfDecimals == maxNumberOfDecimals) return maxNumberOfDecimals;
-            var multiplied = value * (decimal)BigInteger.Pow(10, currentNumberOfDecimals);
-            if (Math.Round(multiplied) == multiplied)
-                return currentNumberOfDecimals;
-            return CalculateNumberOfDecimalPlaces(value, maxNumberOfDecimals, currentNumberOfDecimals + 1);
+            if (ethUnit.ToString().Trim('0') == "1") return true;
+            throw new Exception("Invalid unit value, it should be a power of 10 ");
         }
 
         //public BigInteger ToWei(decimal amount, BigInteger fromUnit)
