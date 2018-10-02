@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Akroma.Core.Model
+namespace Akroma.Model
 {
     public class BlockWithTransactions : Block
     {

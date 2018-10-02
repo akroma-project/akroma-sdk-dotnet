@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Numerics;
 
-namespace Akroma.Core.Model.HexConvertors.Extensions
+namespace Akroma.Model.HexConvertors.Extensions
 {
     public static class HexBigIntegerConvertorExtensions
     {

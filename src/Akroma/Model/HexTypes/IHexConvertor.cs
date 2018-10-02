@@ -1,4 +1,4 @@
-namespace Akroma.Core.Model.HexTypes
+namespace Akroma.Model.HexTypes
 {
     public interface IHexConvertor<T>
     {

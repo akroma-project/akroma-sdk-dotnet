@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Akroma.Core.Model.HexConvertors.Extensions
+namespace Akroma.Model.HexConvertors.Extensions
 {
     public static class HexStringUTF8ConvertorExtensions
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 
-namespace Akroma.Core.Model.HexTypes
+namespace Akroma.Model.HexTypes
 {
     public class HexTypeFactory
     {

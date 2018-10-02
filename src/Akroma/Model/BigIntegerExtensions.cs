@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Akroma.Core.Model
+namespace Akroma.Model
 {
     public static class BigIntegerExtensions
     {

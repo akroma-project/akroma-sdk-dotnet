@@ -1,6 +1,6 @@
-using Akroma.Core.Model.HexConvertors.Extensions;
+using Akroma.Model.HexConvertors.Extensions;
 
-namespace Akroma.Core.Model.HexTypes
+namespace Akroma.Model.HexTypes
 {
     public class HexRPCType<T>
     {

@@ -1,8 +1,8 @@
 using System;
-using Akroma.Core.Model.HexConvertors.Extensions;
-using Akroma.Core.Model.HexTypes;
+using Akroma.Model.HexConvertors.Extensions;
+using Akroma.Model.HexTypes;
 
-namespace Akroma.Core.Model.HexConvertors
+namespace Akroma.Model.HexConvertors
 {
     public class HexUTF8StringConvertor : IHexConvertor<string>
     {

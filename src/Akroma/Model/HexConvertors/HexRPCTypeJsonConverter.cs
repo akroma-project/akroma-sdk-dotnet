@@ -1,8 +1,8 @@
 using System;
-using Akroma.Core.Model.HexTypes;
+using Akroma.Model.HexTypes;
 using Newtonsoft.Json;
 
-namespace Akroma.Core.Model.HexConvertors
+namespace Akroma.Model.HexConvertors
 {
     public class HexRPCTypeJsonConverter<T, TValue> : JsonConverter where T : HexRPCType<TValue>
     {

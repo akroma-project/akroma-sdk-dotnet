@@ -1,7 +1,7 @@
-using Akroma.Core.Model.HexTypes;
+using Akroma.Model.HexTypes;
 using Newtonsoft.Json;
 
-namespace Akroma.Core.Model
+namespace Akroma.Model
 {
     public class Transaction
     {
@@ -37,6 +37,15 @@ namespace Akroma.Core.Model
         
         [JsonProperty(PropertyName = "input")]
         public string Input { get; set; }
+
+        [JsonProperty(PropertyName = "v")]
+        public string V { get; set; }
+
+        [JsonProperty(PropertyName = "r")]
+        public string R { get; set; }
+
+        [JsonProperty(PropertyName = "s")]
+        public string S { get; set; }
 
         // NOT FROM ETH
         //public int Timestamp { get; set; }

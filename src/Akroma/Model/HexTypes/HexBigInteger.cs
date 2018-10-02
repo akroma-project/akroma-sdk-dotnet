@@ -1,8 +1,8 @@
 using System.Numerics;
-using Akroma.Core.Model.HexConvertors;
+using Akroma.Model.HexConvertors;
 using Newtonsoft.Json;
 
-namespace Akroma.Core.Model.HexTypes
+namespace Akroma.Model.HexTypes
 {
     [JsonConverter(typeof(HexRPCTypeJsonConverter<HexBigInteger, BigInteger>))]
     public class HexBigInteger : HexRPCType<BigInteger>

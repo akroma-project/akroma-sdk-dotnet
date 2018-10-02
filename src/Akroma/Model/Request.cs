@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
 
-namespace Akroma.Core.Model
+namespace Akroma.Model
 {
-    public class GethRequest
+    public class Request
     {
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }

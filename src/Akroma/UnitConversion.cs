@@ -1,9 +1,9 @@
 using System;
 using System.Globalization;
 using System.Numerics;
-using Akroma.Core.Model;
+using Akroma.Model;
 
-namespace Akroma.Core
+namespace Akroma
 {
     public class UnitConversion
     {

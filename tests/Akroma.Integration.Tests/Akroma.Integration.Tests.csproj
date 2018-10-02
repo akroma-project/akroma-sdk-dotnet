@@ -15,7 +15,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Akroma.Core\Akroma.Core.csproj" />
+    <ProjectReference Include="..\..\src\Akroma\Akroma.csproj" />
   </ItemGroup>
 
 

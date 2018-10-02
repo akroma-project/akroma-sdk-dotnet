@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Akroma.Core.Model.HexTypes;
+using Akroma.Model.HexTypes;
 using Newtonsoft.Json;
 
-namespace Akroma.Core.Model
+namespace Akroma.Model
 {
     public class Block
     {
