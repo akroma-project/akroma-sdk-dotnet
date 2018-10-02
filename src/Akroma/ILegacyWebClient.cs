@@ -3,7 +3,7 @@ using Akroma.Model;
 
 namespace Akroma
 {
-    public interface IHttpClientAbstraction
+    public interface ILegacyWebClient
     {
         Task<Response<T>> PostAsync<T>(string method, params dynamic[] items);
     }

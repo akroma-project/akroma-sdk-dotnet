@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace Akroma
 {
-    public class HttpClientAbstraction : IHttpClientAbstraction
+    public class LegacyWebClient : ILegacyWebClient
     {
         private static readonly HttpClient HttpClient;
 
-        static HttpClientAbstraction()
+        static LegacyWebClient()
         {
             HttpClient = new HttpClient();
             HttpClient.DefaultRequestHeaders

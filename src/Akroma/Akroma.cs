@@ -8,12 +8,12 @@ namespace Akroma
     {
         //TODO: support providers.
         public static string Url;
-        private static HttpClientAbstraction _client;
+        private static LegacyWebClient _client;
 
         public Akroma(string url = "http://localhost:8545")
         {
             Url = url;
-            _client = new HttpClientAbstraction();
+            _client = new LegacyWebClient();
         }
 
         public async Task<Response<string[]>> FailMethod()
