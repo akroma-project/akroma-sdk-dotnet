@@ -4,7 +4,7 @@ using Akroma.Model.HexTypes;
 
 namespace Akroma
 {
-    public class Akroma
+    public class Akroma : IAkroma
     {
         //TODO: support providers.
         public static string Url;
@@ -16,49 +16,29 @@ namespace Akroma
             _client = new LegacyWebClient();
         }
 
-        public async Task<Response<string[]>> FailMethod()
-        {
-            return await _client.PostAsync<string[]>("undefined_method");
-        }
 
-
-        /// <summary>
-        /// </summary>
-        /// <param name="address"></param>
-        /// <returns>amount in eth/aka</returns>
         public async Task<Response<decimal>> GetBalance(string address)
         {
             var response = await _client.PostAsync<string>("eth_getBalance", address, "latest");
             if (response.Ok)
             {
                 var balance = UnitConversion.Convert.FromWei(new HexBigInteger(response?.Result));
-                return new Response<decimal> { Result = balance };
+                return new Response<decimal> {Result = balance};
             }
+
             return Response<decimal>.OfError(response.Error);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="hash">block hash</param>
-        /// <returns>Block w/ transaction ids (not full transaction data)</returns>
         public async Task<Response<Block>> GetBlockByHash(string hash)
         {
             return await _client.PostAsync<Block>("eth_getBlockByHash", hash, false);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="number">integer of a block number, or the string "earliest", "latest" or "pending"</param>
-        /// <returns>Block w/ transaction ids (not full transaction data)</returns>
         public async Task<Response<Block>> GetBlockByNumber(string number = "latest")
         {
             return await _client.PostAsync<Block>("eth_getBlockByNumber", number, false);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="number">integer of a block number, or the string "earliest", "latest" or "pending"</param>
-        /// <returns>Block transactions (full transaction data)</returns>
         public async Task<Response<BlockWithTransactions>> GetBlockByNumberWithTransactions(
             string number = "latest")
         {
@@ -94,6 +74,11 @@ namespace Akroma
         public async Task<Response<bool>> Syncing()
         {
             return await _client.PostAsync<bool>("eth_syncing");
+        }
+
+        public async Task<Response<string[]>> FailMethod()
+        {
+            return await _client.PostAsync<string[]>("undefined_method");
         }
     }
 }
